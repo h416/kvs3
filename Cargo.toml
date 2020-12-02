@@ -1,6 +1,6 @@
 [package]
 name = "kvs3"
-version = "0.1.0"
+version = "0.1.1"
 authors = ["h416 <h416@users.noreply.github.com>"]
 edition = "2018"
 
