@@ -233,7 +233,6 @@ fn get_id(authorization: &str, object_id: &str) -> String {
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
-    openssl_probe::init_ssl_cert_env_vars();
     env_logger::init();
 
     let mut args = pico_args::Arguments::from_env();

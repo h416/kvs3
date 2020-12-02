@@ -1001,7 +1001,6 @@ dependencies = [
  "blake3",
  "env_logger",
  "log",
- "openssl-probe",
  "pico-args",
  "rust-s3",
  "serde",
