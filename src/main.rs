@@ -1,4 +1,3 @@
-use env_logger;
 use log::debug;
 
 use warp::{self, http::StatusCode, Filter};
@@ -163,7 +162,7 @@ async fn get_value(
         val = filter_value(&val, &fields_string);
     }
 
-    debug!("get {:?} {:?} {:?}", &key, code, &value.to_string());
+    debug!("get {:?} {:?} {:?}", &key, code, &value);
 
     Ok(warp::reply::with_status(
         warp::reply::json(&val),
