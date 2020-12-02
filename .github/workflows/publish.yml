@@ -69,7 +69,7 @@ jobs:
       - name: Install OpenSSL
         if: matrix.os == 'ubuntu-latest'
         run: |
-          apt-get install pkg-config libssl-dev
+          sudo apt-get install pkg-config libssl-dev
         shell: bash
 
       - name: cargo build
