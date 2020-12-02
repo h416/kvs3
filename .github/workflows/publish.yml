@@ -17,14 +17,6 @@ jobs:
         with:
           cmd: cargo build --release
 
-
-      - name: Compress binaries
-        uses: svenstaro/upx-action@v2
-        with:
-          file: target/x86_64-unknown-linux-musl/release/kvs3
-          args: --lzma
-          strip: true
-
       - name: Get tag name
         id: tag_name
         run: |
