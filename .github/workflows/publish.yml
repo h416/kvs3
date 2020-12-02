@@ -49,6 +49,8 @@ jobs:
         if: matrix.os == 'ubuntu-latest'
         run: |
           sudo apt-get install pkg-config libssl-dev
+          pkg-config --libs openssl
+          openssl version
         shell: bash
 
       - name: cargo build
