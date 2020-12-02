@@ -67,10 +67,9 @@ jobs:
           target: ${{ matrix.target }}
 
       - name: Install OpenSSL
+        if: matrix.os == 'ubuntu-latest'
         run: |
-          if: matrix.os == 'ubuntu-latest'
-            apt-get install pkg-config libssl-dev
-          fi
+          apt-get install pkg-config libssl-dev
         shell: bash
 
       - name: cargo build
