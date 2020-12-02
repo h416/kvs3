@@ -7,65 +7,23 @@ on:
 
 jobs:
   publish:
-    name: ${{ matrix.os }} for ${{ matrix.target }}
-    runs-on: ${{ matrix.os }}
-    strategy:
-      matrix:
-        target:
-          - x86_64-unknown-linux-musl
-          - x86_64-pc-windows-msvc
-          - x86_64-apple-darwin
-        include:
-          - os: ubuntu-latest
-            target: x86_64-unknown-linux-musl
-            artifact_name: target/x86_64-unknown-linux-musl/release/kvs3
-            release_name: linux-x86_64
-            cross: true
-            strip: true
-          - os: windows-latest
-            target: x86_64-pc-windows-msvc
-            artifact_name: target/x86_64-pc-windows-msvc/release/kvs3.exe
-            release_name: windows-x86_64.exe
-            cross: false
-            strip: true
-          - os: macos-latest
-            target: x86_64-apple-darwin
-            artifact_name: target/x86_64-apple-darwin/release/kvs3
-            release_name: macos-x86_64
-            cross: false
-            strip: true
-
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Setup Rust toolchain
-        uses: actions-rs/toolchain@v1
+      - name: Build 
+        uses: zhxiaogg/cargo-static-build@master
         with:
-          toolchain: stable
-          target: ${{ matrix.target }}
+          cmd: cargo build --release
 
-      - name: Install OpenSSL
-        if: matrix.os == 'ubuntu-latest'
-        run: |
-          sudo apt-get install pkg-config libssl-dev
-          pkg-config --libs openssl
-          openssl version
-        shell: bash
-
-      - name: cargo build
-        uses: actions-rs/cargo@v1
-        with:
-          command: build
-          args: --release --target=${{ matrix.target }}
-          use-cross: ${{ matrix.cross }}
 
       - name: Compress binaries
         uses: svenstaro/upx-action@v2
         with:
-          file: ${{ matrix.artifact_name }}
+          file: target/x86_64-unknown-linux-musl/release/kvs3
           args: --lzma
-          strip: ${{ matrix.strip }}
+          strip: true
 
       - name: Get tag name
         id: tag_name
@@ -84,7 +42,7 @@ jobs:
         uses: svenstaro/upload-release-action@v2
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: ${{ matrix.artifact_name }}
+          file: target/x86_64-unknown-linux-musl/release/kvs3
           tag: ${{ github.ref }}
-          asset_name: kvs3-$tag-${{ matrix.release_name }}
+          asset_name: kvs3-$tag-linux-x86_64
           body: ${{ steps.changelog_reader.outputs.log_entry }}
