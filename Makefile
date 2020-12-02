@@ -12,23 +12,23 @@ export LONG_VERSION
 all: test
 
 test:
-	cargo test --locked
+	cargo test
 
 watch:
-	cargo watch test --locked
+	cargo watch test
 
 clean:
 	cargo clean
 
 release_lnx:
-	cargo build --locked --release --target=x86_64-unknown-linux-musl
+	cargo build --release --target=x86_64-unknown-linux-musl
 	zip -j ${BIN_NAME}-v${VERSION}-x86_64-lnx.zip target/x86_64-unknown-linux-musl/release/${BIN_NAME}
 
 release_win:
-	cargo build --locked --release --target=x86_64-pc-windows-msvc
+	cargo build --release --target=x86_64-pc-windows-msvc
 	7z a ${BIN_NAME}-v${VERSION}-x86_64-win.zip target/x86_64-pc-windows-msvc/release/${BIN_NAME}.exe
 
 release_mac:
-	cargo build --locked --release --target=x86_64-apple-darwin
+	cargo build --release --target=x86_64-apple-darwin
 	zip -j ${BIN_NAME}-v${VERSION}-x86_64-mac.zip target/x86_64-apple-darwin/release/${BIN_NAME}
 
