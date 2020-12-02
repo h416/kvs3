@@ -7,7 +7,7 @@ fi
 
 
 if [ $1 = "check" ] ; then
-  cargo fmt && cargo fix --allow-no-vcs && cargo clippy && cargo check
+  cargo fmt --all -- --check && cargo fix --allow-no-vcs && cargo clippy -- -D warnings && cargo check
 elif [ $1 = "update" ]; then
   cargo update
 elif [ $1 = "test" ]; then
