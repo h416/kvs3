@@ -66,6 +66,13 @@ jobs:
           toolchain: stable
           target: ${{ matrix.target }}
 
+      - name: Install OpenSSL
+        run: |
+          if: matrix.os == 'ubuntu-latest'
+            apt-get install pkg-config libssl-dev
+          fi
+        shell: bash
+
       - name: cargo build
         uses: actions-rs/cargo@v1
         with:
